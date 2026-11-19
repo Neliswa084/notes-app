@@ -10,7 +10,7 @@ function Routes() {
     <Stack screenOptions={{ headerShown: false }}>
       {/* only logged in users can see the home page */}
       <Stack.Protected guard={!!user}>
-        <Stack.Screen name="index" />
+        <Stack.Screen name="(tabs)" />
       </Stack.Protected>
 
       {/* only logged out users can see login and register */}
