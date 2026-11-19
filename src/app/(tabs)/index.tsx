@@ -1,5 +1,5 @@
-import Home from '../../components/Home';
+import NoteList from '../../components/NoteList';
 
 export default function HomeScreen() {
-  return <Home />;
+  return <NoteList />;
 }
