@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useNotes, categories } from '../context/NotesContext';
+import { Note, useNotes, categories } from '../context/NotesContext';
 import Input from './Input';
 import Button from './Button';
 import { colors } from '../theme';
 
-export default function NoteForm() {
+type Props = { note?: Note };
+
+export default function NoteForm({ note }: Props) {
   const router = useRouter();
-  const { addNote } = useNotes();
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-  const [category, setCategory] = useState('Work');
+  const { addNote, editNote } = useNotes();
+  const [title, setTitle] = useState(note ? note.title : '');
+  const [text, setText] = useState(note ? note.text : '');
+  const [category, setCategory] = useState(note ? note.category : 'Work');
   const [error, setError] = useState('');
 
   async function handleSave() {
@@ -19,7 +21,12 @@ export default function NoteForm() {
       setError('Write something in the note first.');
       return;
     }
-    await addNote(title, text, category);
+
+    if (note) {
+      await editNote(note.id, title, text, category);
+    } else {
+      await addNote(title, text, category);
+    }
     router.back();
   }
 
@@ -50,7 +57,7 @@ export default function NoteForm() {
       />
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Button title="Save note" onPress={handleSave} />
+      <Button title={note ? 'Save changes' : 'Save note'} onPress={handleSave} />
     </View>
   );
 }

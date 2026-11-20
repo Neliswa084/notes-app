@@ -13,6 +13,8 @@ function Routes() {
       <Stack.Protected guard={!!user}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="add-note" options={{ headerShown: true, title: 'Add note' }} />
+        <Stack.Screen name="add-note" options={{ headerShown: true, title: 'Add note' }} />
+<Stack.Screen name="edit-note" options={{ headerShown: true, title: 'Edit note' }} />
       </Stack.Protected>
 
       {/* only logged out users can see login and register */}
