@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { Link } from 'expo-router';
+import { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import Input from './Input';
-import Button from './Button';
 import { colors } from '../theme';
+import Button from './Button';
+import Input from './Input';
 
 export default function RegisterForm() {
   const { register } = useAuth();
@@ -43,5 +43,5 @@ const styles = StyleSheet.create({
   title: { fontSize: 26, fontWeight: '700', color: colors.text },
   subtitle: { fontSize: 15, color: colors.grey, marginTop: 4, marginBottom: 24 },
   error: { color: colors.red, marginBottom: 8 },
-  link: { textAlign: 'center', marginTop: 20, color: colors.blue, fontSize: 15 },
+  link: { textAlign: 'center', marginTop: 20, color: colors.main, fontSize: 15 },
 });
