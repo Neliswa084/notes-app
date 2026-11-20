@@ -16,6 +16,8 @@ export type Note = {
 type NotesType = {
   notes: Note[];
   addNote: (title: string, text: string, category: string) => Promise<void>;
+  editNote: (id: string, title: string, text: string, category: string) => Promise<void>;
+  deleteNote: (id: string) => Promise<void>;
 };
 
 const NotesContext = createContext<NotesType>({} as NotesType);
@@ -55,8 +57,23 @@ export function NotesProvider({ children }: { children: ReactNode }) {
     await saveNotes([newNote, ...notes]);
   }
 
+  // changes one note and saves the time it was edited
+  async function editNote(id: string, title: string, text: string, category: string) {
+    const updated = notes.map((n) =>
+      n.id === id
+        ? { ...n, title: title.trim(), text: text.trim(), category, dateEdited: new Date().toISOString() }
+        : n
+    );
+    await saveNotes(updated);
+  }
+
+  // keeps every note except the one with this id
+  async function deleteNote(id: string) {
+    await saveNotes(notes.filter((n) => n.id !== id));
+  }
+
   return (
-    <NotesContext.Provider value={{ notes, addNote }}>
+    <NotesContext.Provider value={{ notes, addNote, editNote, deleteNote }}>
       {children}
     </NotesContext.Provider>
   );
