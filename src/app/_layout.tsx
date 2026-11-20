@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import { AuthProvider, useAuth } from '../context/AuthContext';
+import { NotesProvider } from '../context/NotesContext';
 
 function Routes() {
   const { user, loading } = useAuth();
@@ -8,9 +9,10 @@ function Routes() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      {/* only logged in users can see the home page */}
+      {/* only logged in users can see these pages */}
       <Stack.Protected guard={!!user}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="add-note" options={{ headerShown: true, title: 'Add note' }} />
       </Stack.Protected>
 
       {/* only logged out users can see login and register */}
@@ -25,7 +27,9 @@ function Routes() {
 export default function RootLayout() {
   return (
     <AuthProvider>
-      <Routes />
+      <NotesProvider>
+        <Routes />
+      </NotesProvider>
     </AuthProvider>
   );
 }
